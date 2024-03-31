@@ -119,7 +119,7 @@ internal class Window : GameWindow
         if (e.Button != MouseButton.Left)
             return;
 
-        float pixelSize = (float)ClientSize.X / CANVAS_WIDTH;
+        (int canvasX, int canvasY) = _canvas.GetCoord(MouseState.X, MouseState.Y);
 
         int canvasX = (int)Math.Floor(MouseState.X / pixelSize);
         int canvasY = (int)Math.Floor(MouseState.Y / pixelSize);
