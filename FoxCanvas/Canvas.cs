@@ -221,6 +221,21 @@ public class Canvas : IDisposable
     }
 
 
+    /// <summary>
+    /// Конвертировать оконные координаты в координаты холста.
+    /// </summary>
+    /// <param name="x">Оконная координата X.</param>
+    /// <param name="y">Оконная координата Y.</param>
+    /// <returns>Координаты на холсте.</returns>
+    public (int canvasX, int canvasY) GetCoord(float x, float y)
+    {
+        int canvasX = (int)Math.Floor(x / PixelSize);
+        int canvasY = (int)Math.Floor(y / PixelSize);
+
+        return (canvasX, canvasY);
+    }
+
+
     public void Dispose()
     {
         _VBO.Dispose();
