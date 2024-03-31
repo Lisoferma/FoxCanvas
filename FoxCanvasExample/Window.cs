@@ -133,6 +133,6 @@ internal class Window : GameWindow
         Console.WriteLine($"   MouseY {MouseState.Y}");
         Console.WriteLine($"  CanvasX {canvasX}");
         Console.WriteLine($"  CanvasY {canvasY}");
-        Console.WriteLine($"PixelSize {pixelSize}");
+        Console.WriteLine($"PixelSize {_canvas.PixelSize}");
     }
 }
