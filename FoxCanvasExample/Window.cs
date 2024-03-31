@@ -33,7 +33,7 @@ internal class Window : GameWindow
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
         _image = new Color[CANVAS_WIDTH, CANVAS_HEIGHT];
-        CreateImage(_image);
+        CreateGridImage(_image);
 
         _canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
         _canvas.SetImage(_image);
@@ -87,7 +87,7 @@ internal class Window : GameWindow
     }
 
 
-    private static void CreateImage(Color[,] image)
+    private static void CreateGridImage(Color[,] image)
     {
         int rows = image.GetLength(0);
         int cols = image.GetLength(1);      
@@ -99,9 +99,9 @@ internal class Window : GameWindow
             for (int j = 0; j < cols; ++j)
             {
                 if (setColor)
-                    image[i, j] = Color.Aqua;
+                    image[i, j] = Color.Gray;
                 else
-                    image[i, j] = Color.Brown;
+                    image[i, j] = Color.DarkGray;
 
                 setColor = setColor == false;
             }
