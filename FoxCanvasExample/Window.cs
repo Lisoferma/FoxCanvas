@@ -76,7 +76,7 @@ internal class Window : GameWindow
     protected override void OnFramebufferResize(FramebufferResizeEventArgs e)
     {
         GL.Viewport(0, 0, e.Width, e.Height);
-        _canvas.Viewport(e.Width, e.Height);
+        _canvas.SetViewport(e.Width, e.Height);
         base.OnFramebufferResize(e);       
     }
 
