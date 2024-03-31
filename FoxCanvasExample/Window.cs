@@ -2,6 +2,7 @@
 using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
+using OpenTK.Mathematics;
 using System.Drawing;
 using FoxCanvas;
 
@@ -111,18 +112,27 @@ internal class Window : GameWindow
     }
 
 
-    //protected override void OnMouseDown(MouseButtonEventArgs e)
-    //{
-    //    base.OnMouseDown(e);
+    protected override void OnMouseDown(MouseButtonEventArgs e)
+    {
+        base.OnMouseDown(e);
 
-    //    if (e.Button != MouseButton.Left)
-    //        return;
+        if (e.Button != MouseButton.Left)
+            return;
 
-    //    Vector2 mousePos = MousePosition;
+        float pixelSize = (float)ClientSize.X / CANVAS_WIDTH;
 
-    //    int x = (mousePos.X - Width / 2f) / (Width / 2f);
-    //    int y = -(mousePos.Y - Height / 2f) / (Height / 2f);
+        int canvasX = (int)Math.Floor(MouseState.X / pixelSize);
+        int canvasY = (int)Math.Floor(MouseState.Y / pixelSize);
 
-    //    Console.WriteLine(x + " " + y);
-    //}
+        _image[canvasY, canvasX] = Color.Orange;
+        _canvas.SetImage(_image);
+
+        Console.WriteLine($"\n    Width {ClientSize.X}");
+        Console.WriteLine($"   Height {ClientSize.Y}");
+        Console.WriteLine($"   MouseX {MouseState.X}");
+        Console.WriteLine($"   MouseY {MouseState.Y}");
+        Console.WriteLine($"  CanvasX {canvasX}");
+        Console.WriteLine($"  CanvasY {canvasY}");
+        Console.WriteLine($"PixelSize {pixelSize}");
+    }
 }
