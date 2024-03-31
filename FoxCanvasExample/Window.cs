@@ -121,9 +121,6 @@ internal class Window : GameWindow
 
         (int canvasX, int canvasY) = _canvas.GetCoord(MouseState.X, MouseState.Y);
 
-        int canvasX = (int)Math.Floor(MouseState.X / pixelSize);
-        int canvasY = (int)Math.Floor(MouseState.Y / pixelSize);
-
         _image[canvasY, canvasX] = Color.Orange;
         _canvas.SetImage(_image);
 
