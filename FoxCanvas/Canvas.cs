@@ -48,6 +48,18 @@ public class Canvas : IDisposable
     public float AspectRatio { get => (float)Width / Height; }
 
     /// <summary>
+    /// Ширина области просмотра холста.
+    /// </summary>
+    public int ViewportWidth { get; private set; }
+
+    /// <summary>
+    /// Высота области просмотра холста.
+    /// </summary>
+    public int ViewportHeight { get; private set; }
+
+    public float PixelSize {  get => (float)ViewportWidth / Width; }
+
+    /// <summary>
     /// Размер данных в байтах нужный для хранения информации о изображении холста.
     /// </summary>
     private int DataSize { get => Width * Height * CHANNEL_COUNT; }
@@ -97,10 +109,13 @@ public class Canvas : IDisposable
     /// </summary>
     /// <param name="width">Ширина холста.</param>
     /// <param name="height">Высота холста.</param>
-    public Canvas(int width, int height)
+    public Canvas(int width, int height, int viewportWidth, int viewportHeight)
     {
         Width = width;
         Height = height;
+
+        ViewportWidth = viewportWidth;
+        ViewportHeight = viewportHeight;
 
         _shader = new Shader(VERT_SHADER, FRAG_SHADER);
 
@@ -168,11 +183,14 @@ public class Canvas : IDisposable
     /// </summary>
     /// <param name="width">Ширина области.</param>
     /// <param name="height">Высота области.</param>
-    public void Viewport(float width, float height)
+    public void SetViewport(int width, int height)
     {
+        ViewportWidth = width;
+        ViewportHeight = height;
+
         if (width > height)
         {
-            float newX = height / width;
+            float newX = (float)height / width;
 
             _vertexes[0].NX = newX;
             _vertexes[1].NX = newX;
@@ -186,7 +204,7 @@ public class Canvas : IDisposable
         }
         else if (width < height)
         {
-            float newY = width / height;
+            float newY = (float)width / height;
 
             _vertexes[0].NY = newY;
             _vertexes[1].NY = -newY;
