@@ -36,7 +36,7 @@ internal class Window : GameWindow
         _image = new Color[CANVAS_WIDTH, CANVAS_HEIGHT];
         CreateGridImage(_image);
 
-        _canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT);
+        _canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT, ClientSize.X, ClientSize.Y);
         _canvas.SetImage(_image);
 
         base.OnLoad();
