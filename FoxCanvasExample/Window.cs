@@ -31,6 +31,8 @@ internal class Window : GameWindow
 
     protected override void OnLoad()
     {
+        base.OnLoad();
+
         GL.ClearColor(0.2f, 0.3f, 0.3f, 1.0f);
 
         _image = new Color[CANVAS_WIDTH, CANVAS_HEIGHT];
@@ -38,24 +40,24 @@ internal class Window : GameWindow
 
         _canvas = new Canvas(CANVAS_WIDTH, CANVAS_HEIGHT, ClientSize.X, ClientSize.Y);
         _canvas.SetImage(_image);
-
-        base.OnLoad();
     }
 
 
     protected override void OnRenderFrame(FrameEventArgs e)
     {
+        base.OnRenderFrame(e);
+
         GL.Clear(ClearBufferMask.ColorBufferBit);
 
         _canvas.Render();
-        SwapBuffers();
-
-        base.OnRenderFrame(e);
+        SwapBuffers();       
     }
 
 
     protected override void OnUpdateFrame(FrameEventArgs e)
     {
+        base.OnUpdateFrame(e);
+
         _frameTime += (float)e.Time;
         _fps++;
 
@@ -67,17 +69,15 @@ internal class Window : GameWindow
         }
 
         if (KeyboardState.IsKeyDown(Keys.Escape))
-            Close();
-
-        base.OnUpdateFrame(e);
+            Close();       
     }
 
 
     protected override void OnFramebufferResize(FramebufferResizeEventArgs e)
     {
+        base.OnFramebufferResize(e);
         GL.Viewport(0, 0, e.Width, e.Height);
-        _canvas.SetViewport(e.Width, e.Height);
-        base.OnFramebufferResize(e);       
+        _canvas.SetViewport(e.Width, e.Height);             
     }
 
 
