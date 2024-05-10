@@ -12,6 +12,8 @@ public sealed class VAO : IDisposable
 
     public PrimitiveType PrimitiveType { get; private set; }
 
+    private bool _disposed = false;
+
 
     public VAO(int vertexCount, PrimitiveType primitiveType)
     {
@@ -55,21 +57,28 @@ public sealed class VAO : IDisposable
             return;
 
         GL.DeleteVertexArray(Handle);
-
         Handle = INVALID_HANDLE;
     }
 
 
     public void Dispose()
     {
-        ReleaseHandle();
+        if (_disposed) return;
+        _disposed = true;
+
+        InternalDispose();
         GC.SuppressFinalize(this);
+    }
+
+
+    private void InternalDispose()
+    {
+        ReleaseHandle();
     }
 
 
     ~VAO()
     {
-        //if (GraphicsContext.CurrentContext != null && !GraphicsContext.CurrentContext.IsDisposed)
-            ReleaseHandle();
+        InternalDispose();
     }
 }

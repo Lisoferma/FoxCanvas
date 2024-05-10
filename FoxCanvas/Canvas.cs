@@ -105,6 +105,8 @@ public class Canvas : IDisposable
         new() { NX = -1.0f, NY =  1.0f, TexX = 0.0f, TexY = 0.0f }  // top left
     };
 
+    private bool _disposed = false;
+
 
     /// <summary>
     /// Инициализировать холст с заданными размерами.
@@ -240,9 +242,13 @@ public class Canvas : IDisposable
 
     public void Dispose()
     {
+        if (_disposed) return;
+        _disposed = true;
+
+        _texture.Dispose();
         _VBO.Dispose();
         _VAO.Dispose();
-        _shader.Dispose();
+        _shader.Dispose();     
     }
 
 

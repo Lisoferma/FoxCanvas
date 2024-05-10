@@ -5,11 +5,13 @@ namespace FoxCanvas;
 
 internal class Shader : IDisposable
 {
+    private const int INVALID_SHADER_PROGRAM = -1;
+
     private readonly int _vertexShader;
     private readonly int _fragmentShader;
-    private readonly int _shaderProgram;
+    private int _shaderProgram;
 
-    private bool _disposedValue = false;
+    private bool _disposed = false;
 
 
     public Shader(string vertexShader, string fragmentShader)
@@ -95,28 +97,34 @@ internal class Shader : IDisposable
     }
 
 
-    protected virtual void Dispose(bool disposing)
+    private void ReleaseShaderProgram()
     {
-        if (!_disposedValue)
-        {
-            GL.DeleteProgram(_shaderProgram);
-            _disposedValue = true;
-        }
+        if (_shaderProgram == INVALID_SHADER_PROGRAM)
+            return;
+
+        GL.DeleteProgram(_shaderProgram);
+        _shaderProgram = INVALID_SHADER_PROGRAM;
     }
 
 
     public void Dispose()
     {
-        Dispose(true);
+        if (_disposed) return;
+        _disposed = true;
+
+        InternalDispose();
         GC.SuppressFinalize(this);
+    }
+
+
+    private void InternalDispose()
+    {
+        ReleaseShaderProgram();
     }
 
 
     ~Shader()
     {
-        if (_disposedValue == false)
-        {
-            Console.WriteLine("GPU Resource leak! Did you forget to call Dispose()?");
-        }
+        InternalDispose();
     }
 }

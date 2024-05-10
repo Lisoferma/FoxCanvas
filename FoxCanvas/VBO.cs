@@ -13,6 +13,8 @@ public sealed class VBO : IDisposable
 
     public BufferUsageHint UsageHint { get; private set; }
 
+    private bool _disposed = false;
+
 
     public VBO(BufferTarget type = BufferTarget.PixelUnpackBuffer, BufferUsageHint usageHint = BufferUsageHint.StreamDraw)
     {
@@ -73,15 +75,22 @@ public sealed class VBO : IDisposable
 
     public void Dispose()
     {
-        ReleaseHandle();
+        if (_disposed) return;
+        _disposed = true;
+
+        InternalDispose();
         GC.SuppressFinalize(this);
+    }
+
+
+    private void InternalDispose()
+    {
+        ReleaseHandle();
     }
 
 
     ~VBO()
     {
-        // При вызове финализатора контекст OpenGL может уже не существовать и попытка выполнить GL.DeleteBuffer приведёт к ошибке
-        //if (GraphicsContext.CurrentContext != null && !GraphicsContext.CurrentContext.IsDisposed)
-            ReleaseHandle();
+        InternalDispose();
     }
 }
